@@ -8,10 +8,14 @@ namespace CreativeWritersToolkitApp.Models
         public string Category { get; set; }
         public string Description { get; set; }
         public string Model { get; set; }
+        //PEX = Uneditable part of the prompt file
         public string PEX { get; set; }
         
         [JsonProperty("prompt")]
         public string PromptText { get; set; }
+        public string SubCategory { get; set; }
+        public int NumberOfUse { get; set; }
+        public bool IsFavorite { get; set; }
         public int Temperature  { get; set; }
         public int Max_Tokens { get; set; }
         public float Top_P { get; set; }
