@@ -120,7 +120,8 @@
 						Margin="5,5,1,0" 
 						VerticalAlignment="Center"			
 						HorizontalAlignment="Stretch"
-						HorizontalContentAlignment="Center">Step 3 - Run AFTER You Have Selected a Prompt</Button>
+						HorizontalContentAlignment="Center"
+						Command="{Binding OnRunCommand}">Step 3 - Run AFTER You Have Selected a Prompt</Button>
 			</StackPanel>
 
 			

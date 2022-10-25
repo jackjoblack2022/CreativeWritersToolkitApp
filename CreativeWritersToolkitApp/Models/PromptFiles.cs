@@ -1,8 +1,12 @@
-﻿using System;
+﻿using CreativeWritersToolkitApp.Services;
+using System;
 using System.Collections.Generic;
+using System.IO.Compression;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace CreativeWritersToolkitApp.Models
 {
@@ -13,18 +17,30 @@ namespace CreativeWritersToolkitApp.Models
         /// <summary>
         /// Creates and loads the database of prompts based on the given folder(s).
         /// </summary>
-        public PromptFiles(string path) 
+        public PromptFiles(string file) 
         { 
-            Prompts = LoadPrompts(path);
+            Prompts = LoadPrompts(file);
         }
 
-        //TODO Load prompts - decide between this way or code behind.
-        private List<Prompt> LoadPrompts(string path)
+        private List<Prompt> LoadPrompts(string file)
         {
-            var prompts = new List<Prompt>();
-
-            throw new NotImplementedException();
-            //return prompts;
+            List<Prompt> result = new List<Prompt>();
+            using (var archive = ZipFile.OpenRead(file))
+            {
+                foreach (var json in archive.Entries)
+                {
+                    if (json.FullName.EndsWith(".json", StringComparison.OrdinalIgnoreCase))
+                    {
+                        using (var sr = new StreamReader(json.Open()))
+                        {
+                            var serializer = new JsonSerializer();
+                            var jsonPrompt = (Prompt)serializer.Deserialize(sr, typeof(Prompt));
+                            result.Add(jsonPrompt);
+                        }
+                    }
+                }
+            }
+            return result;
         }
     }
 }

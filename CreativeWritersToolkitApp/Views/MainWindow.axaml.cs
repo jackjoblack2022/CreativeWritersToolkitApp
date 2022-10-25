@@ -1,4 +1,6 @@
 using Avalonia.Controls;
+using Avalonia.Input;
+using CreativeWritersToolkitApp.Models;
 using CreativeWritersToolkitApp.Services;
 using System;
 using System.IO;
@@ -7,7 +9,14 @@ namespace CreativeWritersToolkitApp.Views
 {
     public partial class MainWindow : Window
     {
-        public bool isLicensed;
+        bool isLicensed;
+        PromptFiles promptDatabase;
+        string localizedDataPathDirectory;
+        bool isFictionActivated = false;
+        bool developmentCopy = true;
+        string version = "1.0.0.0";
+        int numberOfTries;
+        ApiFile apiFile;
 
         public MainWindow()
         {
@@ -18,6 +27,7 @@ namespace CreativeWritersToolkitApp.Views
         {
             var fileName = "license.json";
             var path = Path.Combine(Environment.CurrentDirectory, @"LicenseFiles\", fileName);
+            var promptFiles = Path.Combine(Environment.CurrentDirectory, @"Prompts\");
             bool isLicensed = LicenseCheck(path);
             if (isLicensed)
             {
@@ -26,13 +36,9 @@ namespace CreativeWritersToolkitApp.Views
             //else
             //Messagebox show canceled dialog and close
 
-            bool result = LoadPrompts();
-            if (result)
-            {
-                //Do stuff
-            }
-            //else
-                //show message box
+            apiFile = new ApiFile();
+
+            promptDatabase = new PromptFiles(promptFiles);
         }
 
         //HACK This is a crummy hack because I'm lazy and tired. Don't code like this kids, it's bad form.
@@ -59,10 +65,9 @@ namespace CreativeWritersToolkitApp.Views
             }
         }
 
-        //TODO Load prompts
-        private bool LoadPrompts()
+        private void OnRunCommand(object sender, PointerEventArgs e)
         {
-            throw new NotImplementedException();
+
         }
     }
 }
