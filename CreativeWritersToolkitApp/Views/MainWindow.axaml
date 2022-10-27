@@ -1,9 +1,7 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:CreativeWritersToolkitApp.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 		Width="600" Height="500"
 		MaxWidth="600" MaxHeight="520"
 		MinWidth="600" MinHeight="520"
@@ -13,9 +11,6 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="CreativeWritersToolkitApp">
 
-    <Design.DataContext>
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
 			<MenuItem Header="_File">
@@ -46,67 +41,14 @@
 					Grid.Row="0"
 					Grid.Column="0"
 					Grid.ColumnSpan="2">
-
 				<Grid ColumnDefinitions="*"
 					  RowDefinitions="*,2*">
 					<TextBlock Text="Step 1 - Select Prompt" Grid.Row="0"/>
 					<StackPanel Orientation="Horizontal" Margin="4" Grid.Row="1">
-						<Button Content="Most Used Prompts" Margin="5">
-							<Button.Flyout>
-								<MenuFlyout Placement="BottomEdgeAlignedLeft">
-									<MenuItem Header="_Creative">
-										<MenuItem Header="Content 1"/>
-										<MenuItem Header="Content 2"/>
-									</MenuItem>
-									<MenuItem Header="_Rewriting">
-										<MenuItem Header="Content 1"/>
-										<MenuItem Header="Content 2"/>
-									</MenuItem>
-								</MenuFlyout>
-							</Button.Flyout>
-						</Button>
-						<Button Content="Favorite Prompts" Margin="5">
-							<Button.Flyout>
-								<MenuFlyout Placement="BottomEdgeAlignedLeft">
-									<MenuItem Header="_Creative">
-										<MenuItem Header="Content 1"/>
-										<MenuItem Header="Content 2"/>
-									</MenuItem>
-									<MenuItem Header="_Rewriting">
-										<MenuItem Header="Content 1"/>
-										<MenuItem Header="Content 2"/>
-									</MenuItem>
-								</MenuFlyout>
-							</Button.Flyout>
-						</Button>
 						<Button Content="Nonfiction Prompts" Margin="5">
-							<Button.Flyout>
-								<MenuFlyout Placement="BottomEdgeAlignedLeft">
-									<MenuItem Header="_Creative">
-										<MenuItem Header="Content 1"/>
-										<MenuItem Header="Content 2"/>
-									</MenuItem>
-									<MenuItem Header="_Rewriting">
-										<MenuItem Header="Content 1"/>
-										<MenuItem Header="Content 2"/>
-									</MenuItem>
-								</MenuFlyout>
-							</Button.Flyout>
 						</Button>
 						<Button Content="Fiction Prompts"
 								VerticalAlignment="Center">
-							<Button.Flyout>
-								<MenuFlyout Placement="BottomEdgeAlignedLeft">
-									<MenuItem Header="_Creative">
-										<MenuItem Header="Content 1"/>
-										<MenuItem Header="Content 2"/>
-									</MenuItem>
-									<MenuItem Header="_Rewriting">
-										<MenuItem Header="Content 1"/>
-										<MenuItem Header="Content 2"/>
-									</MenuItem>
-								</MenuFlyout>
-							</Button.Flyout>
 						</Button>
 					</StackPanel>
 				</Grid>
@@ -114,14 +56,19 @@
 			</Border>
 			
 			<StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1">
-				<TextBox Margin="5,5" Height="340" Text="Step 2 - Edit Prompt Here"/>
+				<TextBox 
+					x:Name="PromptBox"
+					Margin="5,5" 
+					Height="340" 
+					Text="Step 2 - Edit Prompt Here"/>
 				<Button Grid.Column="0" 
 						Grid.Row="1" 
 						Margin="5,5,1,0" 
 						VerticalAlignment="Center"			
 						HorizontalAlignment="Stretch"
 						HorizontalContentAlignment="Center"
-						Command="{Binding OnRunCommand}">Step 3 - Run AFTER You Have Selected a Prompt</Button>
+						x:Name="RunBtn"
+						Click="RunBtn_Click">Step 3 - Run</Button>
 			</StackPanel>
 
 			

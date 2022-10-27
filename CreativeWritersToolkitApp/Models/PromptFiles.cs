@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Avalonia.Controls.Shapes;
 
 namespace CreativeWritersToolkitApp.Models
 {
@@ -22,24 +23,36 @@ namespace CreativeWritersToolkitApp.Models
             Prompts = LoadPrompts(file);
         }
 
-        private List<Prompt> LoadPrompts(string file)
+        /// <summary>
+        /// Gets the Prompt Files
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        
+        private List<Prompt> LoadPrompts(string path)
         {
+            //TODO Change this to check all directories and change .zip file to .BPlatt
+            var promptFiles = Directory.GetFiles(path, "*.zip", SearchOption.AllDirectories).ToList();
             List<Prompt> result = new List<Prompt>();
-            using (var archive = ZipFile.OpenRead(file))
+            foreach (var prompt in promptFiles)
             {
-                foreach (var json in archive.Entries)
+                using (var archive = ZipFile.OpenRead(prompt))
                 {
-                    if (json.FullName.EndsWith(".json", StringComparison.OrdinalIgnoreCase))
+                    foreach (var json in archive.Entries)
                     {
-                        using (var sr = new StreamReader(json.Open()))
+                        if (json.FullName.EndsWith(".json", StringComparison.OrdinalIgnoreCase))
                         {
-                            var serializer = new JsonSerializer();
-                            var jsonPrompt = (Prompt)serializer.Deserialize(sr, typeof(Prompt));
-                            result.Add(jsonPrompt);
+                            using (var sr = new StreamReader(json.Open()))
+                            {
+                                var serializer = new JsonSerializer();
+                                var jsonPrompt = (Prompt)serializer.Deserialize(sr, typeof(Prompt));
+                                result.Add(jsonPrompt);
+                            }
                         }
                     }
                 }
             }
+            
             return result;
         }
     }

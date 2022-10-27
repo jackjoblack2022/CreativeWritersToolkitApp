@@ -16,7 +16,7 @@ namespace CreativeWritersToolkitApp.Models
         public string SubCategory { get; set; }
         public int NumberOfUse { get; set; }
         public bool IsFavorite { get; set; }
-        public int Temperature  { get; set; }
+        public float Temperature  { get; set; }
         public int Max_Tokens { get; set; }
         public float Top_P { get; set; }
         public float Frequency_Penalty { get; set; }

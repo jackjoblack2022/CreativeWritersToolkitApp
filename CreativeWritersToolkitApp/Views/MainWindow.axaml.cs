@@ -1,8 +1,11 @@
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using CreativeWritersToolkitApp.Models;
 using CreativeWritersToolkitApp.Services;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 
 namespace CreativeWritersToolkitApp.Views
@@ -20,8 +23,12 @@ namespace CreativeWritersToolkitApp.Views
 
         public MainWindow()
         {
+
+            var promptFiles = Path.Combine(Environment.CurrentDirectory, @"Prompts\");
+            promptDatabase = new PromptFiles(promptFiles);
             InitializeComponent();
         }
+        
 
         public void Init()
         {
@@ -65,9 +72,12 @@ namespace CreativeWritersToolkitApp.Views
             }
         }
 
-        private void OnRunCommand(object sender, PointerEventArgs e)
+        private void RunBtn_Click(object sender, RoutedEventArgs args)
         {
-
+            PromptBox.Text = "This works!";
+            
+            var mb = MessageBox.Avalonia.MessageBoxManager.GetMessageBoxStandardWindow("Test", "This is a Test");
+            mb.Show();
         }
     }
 }
