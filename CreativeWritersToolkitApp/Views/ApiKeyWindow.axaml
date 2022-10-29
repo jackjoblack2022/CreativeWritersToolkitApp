@@ -1,0 +1,33 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+
+		MaxWidth="350" MaxHeight="300"
+		MinWidth="350" MinHeight="300"
+        x:Class="CreativeWritersToolkitApp.Views.ApiKeyWindow"
+        Title="ApiKeyWindow">
+
+	<Grid Height="300" RowDefinitions="Auto, Auto, Auto, Auto, *">
+		<TextBlock Grid.Row="0" Height="70" TextWrapping="Wrap" Margin="10,0,5,0">
+			In order to use this app, you need to enter your API key in the box below. Step one, create a free account at our AI provider.
+		</TextBlock>
+		<TextBlock Grid.Row="1" Height="60" TextWrapping="Wrap" Margin="10,0,5,0">
+			Step Two, grab your API key and paste it in the box below.
+		</TextBlock>
+		<Button Grid.Row="2" 
+				Height="30" 
+				Margin="3,0,0,0" 
+				Background="White" 
+				Content="Step 1 - Click Here to Get An Account"/>
+		<Button Grid.Row="3"
+				Height="30"
+				Margin="3,10,0,0"
+				Background="White"
+				Content="Step 2 - Click Here to Get Your API Key"/>
+
+		<TextBox Text="Enter Your API Key Here" Grid.Row="4" Height="30" Width="320" HorizontalAlignment="Left" Margin="3,0,0,0"/>
+	</Grid>
+	
+	
+</Window>

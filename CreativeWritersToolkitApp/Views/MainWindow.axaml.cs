@@ -7,26 +7,28 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 
 namespace CreativeWritersToolkitApp.Views
 {
     public partial class MainWindow : Window
     {
-        bool isLicensed;
-        PromptFiles promptDatabase;
-        string localizedDataPathDirectory;
-        bool isFictionActivated = false;
+        bool? isLicensed;
+        PromptFiles? promptDatabase;
+        bool isFictionActivated = true;
         bool developmentCopy = true;
         string version = "1.0.0.0";
-        int numberOfTries;
-        ApiFile apiFile;
+        int? numberOfTries;
+        ApiFile? apiFile;
 
         public MainWindow()
         {
-
-            var promptFiles = Path.Combine(Environment.CurrentDirectory, @"Prompts\");
-            promptDatabase = new PromptFiles(promptFiles);
             InitializeComponent();
+            var promptFiles = Path.Combine(Environment.CurrentDirectory, @"Assets\Prompts\");
+            promptDatabase = new PromptFiles();
+            promptDatabase.SortPrompts();
+            PopulateComboBoxes(promptDatabase);
+            
         }
         
 
@@ -45,7 +47,25 @@ namespace CreativeWritersToolkitApp.Views
 
             apiFile = new ApiFile();
 
-            promptDatabase = new PromptFiles(promptFiles);
+            promptDatabase = new PromptFiles();
+        }
+
+        private void OnNFCBSelectionChanged(object sender, SelectionChangedEventArgs args)
+        {
+            var prompt = promptDatabase.NfPrompts.ElementAt(NfComboBox.SelectedIndex);
+            PromptBox.Text = prompt.PromptText;
+        }
+
+        private void OnFCBSelectionChanged(object sender, SelectionChangedEventArgs args)
+        {
+            var prompt = promptDatabase.FPrompts.ElementAt(FComboBox.SelectedIndex);
+            PromptBox.Text = prompt.PromptText;
+        }
+
+        private void PopulateComboBoxes(PromptFiles promptFiles)
+        {
+            NfComboBox.Items = promptFiles.NfPrompts.Select(x => x.Name);
+            FComboBox.Items = promptFiles.FPrompts.Select(x => x.Name);
         }
 
         //HACK This is a crummy hack because I'm lazy and tired. Don't code like this kids, it's bad form.
@@ -72,9 +92,30 @@ namespace CreativeWritersToolkitApp.Views
             }
         }
 
+        private void NfPromptSwitch_Clicked(object sender, RoutedEventArgs args)
+        {
+            NfComboBox.IsVisible = true;
+            FComboBox.IsVisible = false;
+        }
+        private void FPromptSwitch_Clicked(object sender, RoutedEventArgs args)
+        {
+            if(isFictionActivated == true)
+            {
+                NfComboBox.IsVisible = false;
+                FComboBox.IsVisible = true;
+            }
+            
+        }
+
+        private void CallAPIWindow(object sender, RoutedEventArgs args)
+        {
+            var ApiWindow = new ApiKeyWindow();
+            ApiWindow.Show();
+        }
+
         private void RunBtn_Click(object sender, RoutedEventArgs args)
         {
-            PromptBox.Text = "This works!";
+            ResultBx.Text = "This works!";
             
             var mb = MessageBox.Avalonia.MessageBoxManager.GetMessageBoxStandardWindow("Test", "This is a Test");
             mb.Show();

@@ -2,25 +2,29 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		
+		xmlns:vm ="using:CreativeWritersToolkitApp.ViewModels"
 		Width="600" Height="500"
-		MaxWidth="600" MaxHeight="520"
-		MinWidth="600" MinHeight="520"
+		MaxWidth="600" MaxHeight="600"
+		MinWidth="600" MinHeight="550"
 		WindowStartupLocation="CenterScreen"
 		WindowState="Normal"
         x:Class="CreativeWritersToolkitApp.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="CreativeWritersToolkitApp">
 
+	<Design.DataContext>
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
+		
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
 			<MenuItem Header="_File">
-				<MenuItem Header="_Open..."/>
-				<Separator/>
 				<MenuItem Header="_Exit"/>
 			</MenuItem>
-			<MenuItem Header="_Edit">
-				<MenuItem Header="Copy"/>
-				<MenuItem Header="Paste"/>
+			<MenuItem Header="_Input API Key"
+					  x:Name="InputAPIKeyWindow"
+					  Click="CallAPIWindow">
 			</MenuItem>
 		</Menu>
 		<Grid DockPanel.Dock="Bottom">
@@ -41,16 +45,45 @@
 					Grid.Row="0"
 					Grid.Column="0"
 					Grid.ColumnSpan="2">
-				<Grid ColumnDefinitions="*"
-					  RowDefinitions="*,2*">
+				<Grid ColumnDefinitions="*,300"
+					  RowDefinitions="*,Auto,Auto">
 					<TextBlock Text="Step 1 - Select Prompt" Grid.Row="0"/>
 					<StackPanel Orientation="Horizontal" Margin="4" Grid.Row="1">
-						<Button Content="Nonfiction Prompts" Margin="5">
+						<Button x:Name="NfPromptBtn"
+								Content="Nonfiction Prompts" 
+								Margin="5" 
+								Click="NfPromptSwitch_Clicked">
 						</Button>
-						<Button Content="Fiction Prompts"
-								VerticalAlignment="Center">
+						<Button x:Name="FPromptBtn"
+								Content="Fiction Prompts"
+								VerticalAlignment="Center"	
+								Click="FPromptSwitch_Clicked">
 						</Button>
 					</StackPanel>
+					<ComboBox x:Name="NfComboBox" 
+				      SelectionChanged="OnNFCBSelectionChanged"
+					  Grid.Column="0"
+					  Grid.ColumnSpan="2"
+					  Grid.Row="2"
+					  Margin="7,0,0,4"
+					  Width="500"
+					  HorizontalAlignment="Left" 
+					  IsVisible="True">
+						<ComboBoxItem Content="Test 1"/>
+						<ComboBoxItem Content="Test 2"/>
+					</ComboBox>
+					<ComboBox x:Name="FComboBox" 
+					  SelectionChanged="OnFCBSelectionChanged"
+					  Grid.Column="0"
+					  Grid.ColumnSpan="2"
+					  Grid.Row="2"
+					  Margin="7,0,0,4"
+					  Width="500"
+					  HorizontalAlignment="Left"
+					  IsVisible="False">
+						<ComboBoxItem Content="Test 3"/>
+						<ComboBoxItem Content="Test 4"/>
+					</ComboBox>
 				</Grid>
 				
 			</Border>
@@ -58,6 +91,7 @@
 			<StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1">
 				<TextBox 
 					x:Name="PromptBox"
+					TextWrapping="Wrap"
 					Margin="5,5" 
 					Height="340" 
 					Text="Step 2 - Edit Prompt Here"/>
@@ -70,9 +104,12 @@
 						x:Name="RunBtn"
 						Click="RunBtn_Click">Step 3 - Run</Button>
 			</StackPanel>
+			
 
 			
-			<TextBox Margin="5,5" Grid.Column="1" Grid.Row="1" Text="AI Results Will Appear Here"/>
+			<TextBox Margin="5,5" 
+					 x:Name="ResultBx"
+					 Grid.Column="1" Grid.Row="1" Text="AI Results Will Appear Here"/>
 		</Grid>
 	</DockPanel>
 </Window>
