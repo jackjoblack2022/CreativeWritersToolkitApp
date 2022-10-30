@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Avalonia.Controls.Shapes;
 using Path = System.IO.Path;
+using Avalonia.Controls;
+using Avalonia.Platform;
+using Avalonia;
 
 namespace CreativeWritersToolkitApp.Models
 {
@@ -43,14 +46,23 @@ namespace CreativeWritersToolkitApp.Models
 
         public bool SortPrompts()
         {
+            // Option 1: The designer does not have access to the given path. So we exit here in design mode
+            //if (Design.IsDesignMode) 
+            //    return true;
+
+
+            // Option 2: Use the assetLoader
+            var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
+
             var path = Path.Combine(Environment.CurrentDirectory, @"Assets\Prompts");
-            var bplattFiles = Directory.GetFiles(path, ".").Where(file => file.EndsWith(".bplatt", StringComparison.OrdinalIgnoreCase));
+            var bplattFiles = assets.GetAssets(new Uri("avares://CreativeWritersToolkitApp/Assets/Prompts/"),null)
+                .Where(file => file.AbsolutePath.EndsWith(".bplatt", StringComparison.OrdinalIgnoreCase));
             if (bplattFiles.Count() == 0)
                 return false;
 
             foreach(var file in bplattFiles)
             {
-                var promptList = LoadPrompts(file);
+                var promptList = LoadPrompts(file.AbsolutePath);
                 foreach(var prompt in promptList)
                 {
                     if (prompt.Category == "nonfiction")
@@ -68,6 +80,9 @@ namespace CreativeWritersToolkitApp.Models
         {
             List<Prompt> result = new List<Prompt>();
 
+            return result;
+
+            // Your task :-)
             using (var archive = ZipFile.OpenRead(file))
             {
                 foreach (var json in archive.Entries)
