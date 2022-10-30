@@ -90,7 +90,8 @@
 			
 			<StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1">
 				<TextBox 
-					x:Name="PromptBox"
+					x:Name="PromptBox" 
+					AcceptsReturn="True"
 					TextWrapping="Wrap"
 					Margin="5,5" 
 					Height="340" 
@@ -109,6 +110,7 @@
 			
 			<TextBox Margin="5,5" 
 					 x:Name="ResultBx"
+					 TextWrapping="Wrap"
 					 Grid.Column="1" Grid.Row="1" Text="AI Results Will Appear Here"/>
 		</Grid>
 	</DockPanel>

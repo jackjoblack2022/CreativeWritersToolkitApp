@@ -3,12 +3,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 
-		MaxWidth="350" MaxHeight="300"
-		MinWidth="350" MinHeight="300"
+		MaxWidth="350" MaxHeight="330"
+		MinWidth="350" MinHeight="330"
         x:Class="CreativeWritersToolkitApp.Views.ApiKeyWindow"
-        Title="ApiKeyWindow">
+        Title="ApiKeyWindow"
+		Opened="OnOpened">
 
-	<Grid Height="300" RowDefinitions="Auto, Auto, Auto, Auto, *">
+	<Grid Height="300" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto">
 		<TextBlock Grid.Row="0" Height="70" TextWrapping="Wrap" Margin="10,0,5,0">
 			In order to use this app, you need to enter your API key in the box below. Step one, create a free account at our AI provider.
 		</TextBlock>
@@ -26,7 +27,23 @@
 				Background="White"
 				Content="Step 2 - Click Here to Get Your API Key"/>
 
-		<TextBox Text="Enter Your API Key Here" Grid.Row="4" Height="30" Width="320" HorizontalAlignment="Left" Margin="3,0,0,0"/>
+		<TextBox x:Name="ApiTextBx"
+				 Text="Enter Your API Key Here" 
+				 Watermark="Enter Your API Key Here"
+				 Grid.Row="4" 
+				 Height="30" 
+				 Width="320" 
+				 HorizontalAlignment="Left" 
+				 Margin="10,15,0,0"/>
+		
+		<Button x:Name="SaveBtn" 
+				Click="SaveBtnClick"
+				Grid.Row="5" 
+				Height="30" 
+				Margin="10,10,0,0" 
+				Content="Save" 
+				Foreground="White" 
+				Background="Green"/>
 	</Grid>
 	
 	

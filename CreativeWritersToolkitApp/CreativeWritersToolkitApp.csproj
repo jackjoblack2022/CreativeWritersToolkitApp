@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
+    <AvaloniaResource Remove="Assets\ApiFile.txt" />
     <AvaloniaResource Remove="Assets\Prompts\Fictionstandard.bplatt" />
     <AvaloniaResource Remove="Assets\Prompts\NfPrompts.bplatt" />
     <None Remove=".gitignore" />
@@ -29,6 +30,7 @@
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.18" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.18" />
+    <PackageReference Include="Betalgo.OpenAI.GPT3" Version="6.4.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
     <PackageReference Include="MessageBox.Avalonia" Version="2.1.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0-preview.7.22375.6" />
@@ -38,6 +40,9 @@
     <PackageReference Include="XamlNameReferenceGenerator" Version="1.3.4" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="Assets\ApiFile.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <AvaloniaResource Update="Assets\Prompts\2nd Grade Summarization.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </AvaloniaResource>

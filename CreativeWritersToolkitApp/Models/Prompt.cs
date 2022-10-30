@@ -21,6 +21,9 @@ namespace CreativeWritersToolkitApp.Models
         public float Top_P { get; set; }
         public float Frequency_Penalty { get; set; }
         public float Presence_Penalty { get; set; }
+        [JsonProperty("stop")]
+        public string[]? Stop { get; set; }
 
+        public int AffiliateLicense { get; set; }
     }
 }
