@@ -167,9 +167,11 @@ namespace CreativeWritersToolkitApp.Views
                 }
                 
             }
+            this.IsEnabled = false;
             prompt.PromptText = PromptBox.Text;
             var result = await BeginOpenAi();
             ResultBx.Text = result;
+            this.IsEnabled = true;
         }
     }
 }
