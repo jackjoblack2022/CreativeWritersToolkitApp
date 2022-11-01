@@ -16,6 +16,9 @@
 	<Design.DataContext>
 		<vm:MainWindowViewModel/>
 	</Design.DataContext>
+	<Design.IsDesignMode>
+		
+	</Design.IsDesignMode>
 		
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">

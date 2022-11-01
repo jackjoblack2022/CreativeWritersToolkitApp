@@ -10,11 +10,55 @@
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
-    <AvaloniaResource Remove="Assets\ApiFile.txt" />
-    <AvaloniaResource Remove="Assets\Prompts\Fictionstandard.bplatt" />
-    <AvaloniaResource Remove="Assets\Prompts\NfPrompts.bplatt" />
     <None Remove=".gitignore" />
-    <None Remove="Assets\Prompts\fictionstandard.zip" />
+    <None Remove="Assets\ApiFile.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Prompts\Fiction\basic car chase scene.json" />
+    <Content Include="Assets\Prompts\Fiction\basic mystery plot.json" />
+    <Content Include="Assets\Prompts\Fiction\basic romance plot.json" />
+    <Content Include="Assets\Prompts\Fiction\basic sci-fi plot.json" />
+    <Content Include="Assets\Prompts\Fiction\craft a large fantasy plot.json" />
+    <Content Include="Assets\Prompts\Fiction\create a romance love interest.json" />
+    <Content Include="Assets\Prompts\Fiction\Describe a location.json" />
+    <Content Include="Assets\Prompts\Fiction\first person to third person.json" />
+    <Content Include="Assets\Prompts\Fiction\first to second pov changer.json" />
+    <Content Include="Assets\Prompts\Fiction\High Fantasy Character Prompt.json" />
+    <Content Include="Assets\Prompts\Fiction\romance character creator.json" />
+    <Content Include="Assets\Prompts\Fiction\second person to third person pov change.json" />
+    <Content Include="Assets\Prompts\Fiction\second to first pov change.json" />
+    <Content Include="Assets\Prompts\Fiction\third to first pov change.json" />
+    <Content Include="Assets\Prompts\Fiction\third to second pov change.json" />
+    <Content Include="Assets\Prompts\Fiction\tone change creepy to cozy.json" />
+    <Content Include="Assets\Prompts\Fiction\Tone Changer Creepy.json" />
+    <Content Include="Assets\Prompts\Fiction\two sentence horror.json" />
+    <Content Include="Assets\Prompts\Fiction\two sentence mystery.json" />
+    <Content Include="Assets\Prompts\Fiction\Write a moment that divides a hero%27s life.json" />
+    <Content Include="Assets\Prompts\Fiction\write dialogue between two fantasy characters.json" />
+    <Content Include="Assets\Prompts\Nonfiction\2nd Grade Summarization.json" />
+    <Content Include="Assets\Prompts\Nonfiction\Absurd Analogy Maker.json" />
+    <Content Include="Assets\Prompts\Nonfiction\basic research key points.json" />
+    <Content Include="Assets\Prompts\Nonfiction\Cliche Twist.json" />
+    <Content Include="Assets\Prompts\Nonfiction\correct the english.json" />
+    <Content Include="Assets\Prompts\Nonfiction\Create an analogy.json" />
+    <Content Include="Assets\Prompts\Nonfiction\create jokes.json" />
+    <Content Include="Assets\Prompts\Nonfiction\Extract and generate new keywords.json" />
+    <Content Include="Assets\Prompts\Nonfiction\extract keyword.json" />
+    <Content Include="Assets\Prompts\Nonfiction\first person to third person.json" />
+    <Content Include="Assets\Prompts\Nonfiction\first to second pov changer.json" />
+    <Content Include="Assets\Prompts\Nonfiction\general non-fiction outline prompt.json" />
+    <Content Include="Assets\Prompts\Nonfiction\Generate Book Titles.json" />
+    <Content Include="Assets\Prompts\Nonfiction\Provide In Depth Information About Topic.json" />
+    <Content Include="Assets\Prompts\Nonfiction\Relative Scene for Non-fiction.json" />
+    <Content Include="Assets\Prompts\Nonfiction\second person to third person pov change.json" />
+    <Content Include="Assets\Prompts\Nonfiction\second to first pov change.json" />
+    <Content Include="Assets\Prompts\Nonfiction\Step 2 Generate a chapter outline.json" />
+    <Content Include="Assets\Prompts\Nonfiction\Third step draft chapter.json" />
+    <Content Include="Assets\Prompts\Nonfiction\third to first pov change.json" />
+    <Content Include="Assets\Prompts\Nonfiction\third to second pov change.json" />
+    <Content Include="Assets\Prompts\Nonfiction\write a non-fiction conclusion for a book.json" />
+    <Content Include="Assets\Prompts\Nonfiction\write a non-fiction title.json" />
+    <Content Include="Assets\Prompts\Nonfiction\write an non-fiction introduction.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,37 +84,11 @@
     <PackageReference Include="XamlNameReferenceGenerator" Version="1.3.4" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="Assets\ApiFile.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <AvaloniaResource Update="Assets\Prompts\2nd Grade Summarization.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </AvaloniaResource>
-    <AvaloniaResource Update="Assets\Prompts\Create a short ad for a book.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </AvaloniaResource>
-    <AvaloniaResource Update="Assets\Prompts\Fictionstandard.zip">
+    <AvaloniaResource Update="Assets\Prompts\FStandard.bplatt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </AvaloniaResource>
-    <None Update="Assets\Prompts\Fictionstandard.bplatt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Prompts\NfPrompts.bplatt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <AvaloniaResource Update="Assets\Prompts\NfPrompts.zip">
+    <AvaloniaResource Update="Assets\Prompts\NfStandard.bplatt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </AvaloniaResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="Assets\Prompts\2nd Grade Summarization.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Prompts\Create a short ad for a book.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Prompts\NfPrompts.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 </Project>

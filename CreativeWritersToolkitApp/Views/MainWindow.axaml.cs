@@ -1,6 +1,8 @@
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Platform;
 using CreativeWritersToolkitApp.Models;
 using CreativeWritersToolkitApp.Services;
 using System;
