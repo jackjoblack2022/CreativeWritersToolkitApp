@@ -10,7 +10,6 @@
 		WindowStartupLocation="CenterScreen"
 		WindowState="Normal"
         x:Class="CreativeWritersToolkitApp.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
         Title="CreativeWritersToolkitApp">
 
 	<Design.DataContext>
@@ -28,6 +27,10 @@
 			<MenuItem Header="_Input API Key"
 					  x:Name="InputAPIKeyWindow"
 					  Click="CallAPIWindow">
+			</MenuItem>
+			<MenuItem Header="_Register License"
+					  x:Name="RegisterLicenseWindow"
+					  Click="CallRegisterLicenseWindow">
 			</MenuItem>
 		</Menu>
 		<Grid DockPanel.Dock="Bottom">

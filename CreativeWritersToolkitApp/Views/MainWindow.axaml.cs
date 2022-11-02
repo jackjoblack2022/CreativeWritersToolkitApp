@@ -18,12 +18,15 @@ namespace CreativeWritersToolkitApp.Views
     {
         Prompt prompt;
         bool? isLicensed;
+        string licensePath;
         PromptFiles? promptDatabase;
         bool isFictionActivated = true;
         bool developmentCopy = true;
         string version = "0.8.0.0";
         int? numberOfTries;
         ApiFile? apiFile;
+        string apiPath;
+        Licensing licensing;
 
         public MainWindow()
         {
@@ -35,29 +38,72 @@ namespace CreativeWritersToolkitApp.Views
             prompt = null;
             apiFile = new ApiFile();
             Init();
+
         }
         
 
-        public void Init()
+        public async Task Init()
         {
-            var fileName = "license.json";
-            var path = Path.Combine(Environment.CurrentDirectory, @"LicenseFiles\", fileName);
+            RunBtn.IsEnabled = false;
+            NfComboBox.IsEnabled = false;
+            FComboBox.IsEnabled = false;
+            NfPromptBtn.IsEnabled = false;
+            FPromptBtn.IsEnabled = false;
+            PromptBox.IsEnabled = false;
+            ResultBx.IsEnabled = false;
+
+            var licenseFile = "license.json";
+            licensePath = Path.Combine(Environment.CurrentDirectory, @"LicenseFiles\", licenseFile);
             var promptFiles = Path.Combine(Environment.CurrentDirectory, @"Prompts\");
-            var apiPath = Path.Combine(Environment.CurrentDirectory, @"Assets\ApiFile.txt");
+            apiPath = Path.Combine(Environment.CurrentDirectory, @"Assets\ApiFile.txt");
+            licensing = new Licensing();
+            licensing.OnSuccessfulLicensing += Licensing_OnSuccessfulLicensing;
+            licensing.OnFailedLicensing += Licensing_OnFailedLicensing;
+            licensing.CheckLicense(licensePath);
+            
+        }
+
+        private void Licensing_OnFailedLicensing(object? sender, EventArgs e)
+        {
+            if (licensing.IsAppLicensed == false)
+            {
+                RunBtn.IsEnabled = false;
+                NfComboBox.IsEnabled = false;
+                FComboBox.IsEnabled = false;
+                NfPromptBtn.IsEnabled = false;
+                FPromptBtn.IsEnabled = false;
+                PromptBox.IsEnabled = false;
+                ResultBx.IsEnabled = false;
+            }
+        }
+
+        private void Licensing_OnSuccessfulLicensing(object? sender, EventArgs e)
+        {
+            RunBtn.IsEnabled = true;
+            NfComboBox.IsEnabled = true;
+            NfPromptBtn.IsEnabled = true;
+            PromptBox.IsEnabled = true;
+            ResultBx.IsEnabled = true;
+
+            if (licensing.IsFictionActived == false)
+            {
+                FPromptBtn.IsEnabled = false;
+                FComboBox.IsEnabled = false;
+            }
+            else
+            {
+                FPromptBtn.IsEnabled = true;
+                FComboBox.IsEnabled = true;
+            }
+
             if (ApiCheck(apiPath) == false)
             {
                 var messageBox = MessageBox.Avalonia.MessageBoxManager
                         .GetMessageBoxStandardWindow("Warning", "There is no API key. Please get your api key first.", MessageBox.Avalonia.Enums.ButtonEnum.Ok, MessageBox.Avalonia.Enums.Icon.Error, WindowStartupLocation.CenterOwner);
                 messageBox.Show();
             }
-            //bool isLicensed = LicenseCheck(path);
-            //if (isLicensed)
-            //{
-            //    this.isLicensed = true;
-            //}
-            //else
-            //Messagebox show canceled dialog and close
         }
+
 
         private bool ApiCheck(string path)
         {
@@ -95,30 +141,6 @@ namespace CreativeWritersToolkitApp.Views
             FComboBox.Items = promptFiles.FPrompts.Select(x => x.Name);
         }
 
-        //HACK This is a crummy hack because I'm lazy and tired. Don't code like this kids, it's bad form.
-        public static string key;
-        public static string email;
-
-        /// <summary>
-        /// Checks if a license file is valid. If file has not been updated with proper information, requests it from user, checks info, then builds and saves new file.
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        private bool LicenseCheck(string path)
-        {
-            var licensing = new Licensing();
-            var loadedLicenseFile = licensing.LicenseFile(path);
-            if(loadedLicenseFile.Key == "0" || loadedLicenseFile.Email == "0")
-            {
-                //TODO show license box
-                return licensing.IsActive(key, email);
-            }
-            else
-            {
-                return licensing.IsActive(loadedLicenseFile);
-            }
-        }
-
         private void NfPromptSwitch_Clicked(object sender, RoutedEventArgs args)
         {
             NfComboBox.IsVisible = true;
@@ -140,6 +162,12 @@ namespace CreativeWritersToolkitApp.Views
             ApiWindow.ApiFile = apiFile;
             ApiWindow.Show();
             
+        }
+
+        private void CallRegisterLicenseWindow(object sender, RoutedEventArgs args)
+        {
+            var LicenseWindow = new LicenseWindow();
+            LicenseWindow.Show();
         }
 
         private async Task<string> BeginOpenAi()
