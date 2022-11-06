@@ -8,21 +8,26 @@ using CreativeWritersToolkitApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Cache;
+using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace CreativeWritersToolkitApp.Views
 {
     public partial class MainWindow : Window
     {
+        string promptFiles;
         Prompt prompt;
         bool? isLicensed;
         string licensePath;
         PromptFiles? promptDatabase;
         bool isFictionActivated = true;
         bool developmentCopy = true;
-        string version = "0.8.0.0";
+        string version = "1.0.1.0";
         int? numberOfTries;
         ApiFile? apiFile;
         string apiPath;
@@ -31,16 +36,108 @@ namespace CreativeWritersToolkitApp.Views
         public MainWindow()
         {
             InitializeComponent();
-            var promptFiles = Path.Combine(Environment.CurrentDirectory, @"Assets\Prompts\");
+            promptFiles = Path.Combine(Environment.CurrentDirectory, @"Assets\Prompts\");
             promptDatabase = new PromptFiles();
             promptDatabase.SortPrompts();
             PopulateComboBoxes(promptDatabase);
             prompt = null;
             apiFile = new ApiFile();
             Init();
+            CheckForUpdates();
 
         }
         
+        private async void ImportBtn_Run(object sender, RoutedEventArgs args)
+        {
+            var importDialog = new OpenFileDialog();
+            var filter = new FileDialogFilter();
+            filter.Name = "Bplatt Files";
+            filter.Extensions.Add("bplatt");
+            importDialog.Filters.Add(filter);
+
+            var importPath = await importDialog.ShowAsync(this);
+            if(importPath == null)
+            {
+                return;
+            }
+            var uriPaths = importPath[0].Split(@"\");
+
+            var promptName = uriPaths.Last();
+
+            var targetPath = Path.Combine(promptFiles, promptName);
+            File.Copy(importPath[0], targetPath, true);
+            promptDatabase = new PromptFiles();
+            promptDatabase.SortPrompts();
+            PopulateComboBoxes(promptDatabase);
+
+        }
+
+        private async void CheckForUpdate(object sender, RoutedEventArgs e)
+        {
+            var liveVersion = LoadVersion();
+            var url = "https://2022sfproducts.s3.amazonaws.com/TheCreativeWritersToolkit/The+Creative+Writer's+Toolkit.zip";
+            if (liveVersion != String.Empty)
+            {
+                if (version != liveVersion)
+                {
+                    var messageBox = MessageBox.Avalonia.MessageBoxManager
+                        .GetMessageBoxStandardWindow("New Version?", "There is a new version available. Would you like to download it?", MessageBox.Avalonia.Enums.ButtonEnum.YesNo, MessageBox.Avalonia.Enums.Icon.Info, WindowStartupLocation.CenterOwner);
+                    var result = await messageBox.Show();
+                    if (result == MessageBox.Avalonia.Enums.ButtonResult.Yes)
+                    {
+
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+                        using (Process process = Process.Start(new ProcessStartInfo
+                        {
+                            FileName = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? url : "open",
+                            Arguments = RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? $"-e {url}" : "",
+                            CreateNoWindow = true,
+                            UseShellExecute = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+                        })) ;
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+                    }
+                }
+            }
+        }
+
+        private async Task CheckForUpdates()
+        {
+            var liveVersion = LoadVersion();
+            var url = "https://2022sfproducts.s3.amazonaws.com/TheCreativeWritersToolkit/The+Creative+Writer's+Toolkit.zip";
+            if(liveVersion != String.Empty)
+            {
+                if(version != liveVersion)
+                {
+                    var messageBox = MessageBox.Avalonia.MessageBoxManager
+                        .GetMessageBoxStandardWindow("New Version?", "There is a new version available. Would you like to download it?", MessageBox.Avalonia.Enums.ButtonEnum.YesNo, MessageBox.Avalonia.Enums.Icon.Info, WindowStartupLocation.CenterOwner);
+                    var result = await messageBox.Show();
+                    if(result == MessageBox.Avalonia.Enums.ButtonResult.Yes)
+                    {
+
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+                        using (Process process = Process.Start(new ProcessStartInfo
+                        {
+                            FileName = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? url : "open",
+                            Arguments = RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? $"-e {url}" : "",
+                            CreateNoWindow = true,
+                            UseShellExecute = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+                        })) ;
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+                    }
+                }
+            }
+        }
+
+        public static string LoadVersion()
+        {
+            var client = new HttpClient();
+            client.BaseAddress = new Uri("https://2022sfproducts.s3.amazonaws.com/TheCreativeWritersToolkit/version.txt");
+            var response = client.GetAsync(client.BaseAddress).Result;
+            if (response.IsSuccessStatusCode)
+                return response.Content.ReadAsStringAsync().Result;
+            else return string.Empty;
+
+        }
 
         public async Task Init()
         {

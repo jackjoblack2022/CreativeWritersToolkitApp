@@ -9,8 +9,9 @@
 		MinWidth="600" MinHeight="550"
 		WindowStartupLocation="CenterScreen"
 		WindowState="Normal"
+		Icon="/Assets/avalonia-logo.ico"
         x:Class="CreativeWritersToolkitApp.Views.MainWindow"
-        Title="CreativeWritersToolkitApp">
+        Title="Creative Writer's Toolkit 1.0.0.0">
 
 	<Design.DataContext>
 		<vm:MainWindowViewModel/>
@@ -31,6 +32,10 @@
 			<MenuItem Header="_Register License"
 					  x:Name="RegisterLicenseWindow"
 					  Click="CallRegisterLicenseWindow">
+			</MenuItem>
+			<MenuItem Header="_Check for Updates"
+					  Click="CheckForUpdate">
+				
 			</MenuItem>
 		</Menu>
 		<Grid DockPanel.Dock="Bottom">
@@ -58,13 +63,22 @@
 						<Button x:Name="NfPromptBtn"
 								Content="Nonfiction Prompts" 
 								Margin="5" 
+								Background="ForestGreen"
+								Foreground="White"
 								Click="NfPromptSwitch_Clicked">
 						</Button>
 						<Button x:Name="FPromptBtn"
 								Content="Fiction Prompts"
-								VerticalAlignment="Center"	
+								VerticalAlignment="Center"
+								Background="ForestGreen"
+								Foreground="White"
 								Click="FPromptSwitch_Clicked">
 						</Button>
+						<Button x:Name="ImportBtn"
+								Content="Import New Prompt Pack"
+								Margin="5"
+								HorizontalAlignment="Right"
+								Click="ImportBtn_Run"/>
 					</StackPanel>
 					<ComboBox x:Name="NfComboBox" 
 				      SelectionChanged="OnNFCBSelectionChanged"
@@ -109,7 +123,10 @@
 						HorizontalAlignment="Stretch"
 						HorizontalContentAlignment="Center"
 						x:Name="RunBtn"
-						Click="RunBtn_Click">Step 3 - Run</Button>
+						Click="RunBtn_Click"
+						Background="Maroon"
+						Foreground="White"
+						>Step 3 - Run</Button>
 			</StackPanel>
 			
 

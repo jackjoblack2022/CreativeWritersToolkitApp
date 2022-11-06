@@ -6,7 +6,8 @@
 		MaxWidth="350" MaxHeight="330"
 		MinWidth="350" MinHeight="330"
         x:Class="CreativeWritersToolkitApp.Views.ApiKeyWindow"
-        Title="ApiKeyWindow"
+        Title="Get API Key"
+		Icon="/Assets/avalonia-logo.ico"
 		Opened="OnOpened">
 
 	<Grid Height="300" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto">

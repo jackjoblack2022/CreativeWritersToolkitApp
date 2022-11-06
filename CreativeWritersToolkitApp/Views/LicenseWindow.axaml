@@ -6,7 +6,8 @@
 		MinHeight="210" MinWidth="400"
 		MaxHeight="210" MaxWidth="400"
         x:Class="CreativeWritersToolkitApp.Views.LicenseWindow"
-        Title="LicenseWindow">
+		Icon="/Assets/avalonia-logo.ico"
+        Title="Register License">
 	<Grid Width="400" Height="200" RowDefinitions="Auto, Auto, Auto, Auto">
 		<TextBlock Grid.Row="0" 
 				   Height="80" 

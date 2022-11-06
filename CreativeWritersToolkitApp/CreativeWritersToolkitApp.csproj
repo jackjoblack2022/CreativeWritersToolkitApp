@@ -7,13 +7,19 @@
     <TrimMode>copyused</TrimMode>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <Platforms>AnyCPU;x86</Platforms>
+    <ApplicationIcon>Assets\avalonia-logo.ico</ApplicationIcon>
   </PropertyGroup>
 	<ItemGroup>
 		<AvaloniaResource Include="Assets\**" />
 		<AvaloniaResource Remove="Assets\Prompts\FStandard.bplatt" />
 		<AvaloniaResource Remove="Assets\Prompts\NfStandard.bplatt" />
-		<AvaloniaResource Include="Assets\avalonia-logo.ico" />
+		<AvaloniaResource Include="Assets\avalonia-logo.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</AvaloniaResource>
 		<None Remove=".gitignore" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Content Include="Assets\avalonia-logo.ico" />
 	</ItemGroup>
   <ItemGroup>
     <!--This helps with theme dll-s trimming.
@@ -50,7 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Update="LicenseFiles\license.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 </Project>
