@@ -89,8 +89,11 @@
 					  Width="500"
 					  HorizontalAlignment="Left" 
 					  IsVisible="True">
-						<ComboBoxItem Content="Test 1"/>
-						<ComboBoxItem Content="Test 2"/>
+						<ComboBox.ItemTemplate>
+							<DataTemplate>
+								<TextBlock Text="{Binding Name}"/>
+							</DataTemplate>
+						</ComboBox.ItemTemplate>
 					</ComboBox>
 					<ComboBox x:Name="FComboBox" 
 					  SelectionChanged="OnFCBSelectionChanged"
@@ -101,8 +104,11 @@
 					  Width="500"
 					  HorizontalAlignment="Left"
 					  IsVisible="False">
-						<ComboBoxItem Content="Test 3"/>
-						<ComboBoxItem Content="Test 4"/>
+						<ComboBox.ItemTemplate>
+							<DataTemplate>
+								<TextBlock Text="{Binding Name}"/>
+							</DataTemplate>
+						</ComboBox.ItemTemplate>
 					</ComboBox>
 				</Grid>
 				

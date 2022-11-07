@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Platform;
+using Avalonia.Remote.Protocol.Input;
 using CreativeWritersToolkitApp.Models;
 using CreativeWritersToolkitApp.Services;
 using System;
@@ -234,8 +235,23 @@ namespace CreativeWritersToolkitApp.Views
 
         private void PopulateComboBoxes(PromptFiles promptFiles)
         {
-            NfComboBox.Items = promptFiles.NfPrompts.Select(x => x.Name);
-            FComboBox.Items = promptFiles.FPrompts.Select(x => x.Name);
+            var nfPromptList = promptFiles.NfPrompts;
+            var fPromptList = promptFiles.FPrompts;
+
+            var nfIndex = nfPromptList.FindIndex(x => x.Name == "STEP 1. Please select a prompt file here.");
+            var nfItem = nfPromptList[nfIndex];
+            nfPromptList[nfIndex] = nfPromptList[0];
+            nfPromptList[0] = nfItem;
+
+            var fIndex = fPromptList.FindIndex(x => x.Name == "STEP 1. Please select a prompt file here.");
+            var fItem = fPromptList[fIndex];
+            fPromptList[fIndex] = fPromptList[0];
+            fPromptList[0] = fItem;
+
+            NfComboBox.Items = promptFiles.NfPrompts;
+            FComboBox.Items = promptFiles.FPrompts;
+            NfComboBox.SelectedIndex = 0;
+            FComboBox.SelectedIndex = 0;
         }
 
         private void NfPromptSwitch_Clicked(object sender, RoutedEventArgs args)
